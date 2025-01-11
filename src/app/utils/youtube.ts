@@ -1,3 +1,21 @@
+// export async function fetchPlaylistItems(
+//   playlistId: string,
+//   pageToken?: string
+// ) {
+//   const params = new URLSearchParams({
+//     part: "snippet",
+//     playlistId,
+//     maxResults: "12",
+//     key: process.env.YOUTUBE_API_KEY!,
+//     ...(pageToken && { pageToken }),
+//   });
+
+//   const response = await fetch(
+//     `${process.env.YOUTUBE_API_BASE_URL}/playlistItems?${params}`
+//   );
+//   return response.json();
+// }
+
 export async function fetchPlaylistItems(
   playlistId: string,
   pageToken?: string

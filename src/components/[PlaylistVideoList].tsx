@@ -25,12 +25,6 @@ export default function PlaylistVideoList({
   useEffect(() => {
     const fetchVideos = async () => {
       const apiKey = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY; // Use environment variable
-      if (!apiKey || !playlistId) {
-        console.error("Missing API key or playlist ID");
-        setLoading(false);
-        return;
-      }
-
       const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=20&playlistId=${playlistId}&key=${apiKey}`;
 
       try {

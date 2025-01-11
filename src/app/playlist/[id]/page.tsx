@@ -3,21 +3,19 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PlaylistVideoList from "@/components/[PlaylistVideoList]";
-import Header from "../../../components/Header";
-import PaginationButtons from "../../../components/PaginationButtons";
+// import Header from "../../../components/Header";
+// import PaginationButtons from "../../../components/PaginationButtons";
 import { fetchPlaylistItems } from "../../utils/youtube";
 export default async function PlaylistPage({
   params,
-  searchParams: searchParamsPromise,
+  searchParams,
 }: {
-  params: { id: string };
-  searchParams?: Promise<{ pageToken?: string }>;
+  params: { id: string }; // params is an object
+  searchParams?: { pageToken?: string }; // searchParams is also an object
 }) {
   let playlistItemsData;
 
   try {
-    // Await the searchParams before accessing its properties
-    const searchParams = await searchParamsPromise;
     const pageToken = searchParams?.pageToken || ""; // Use an empty string if no token
 
     // Fetch playlist items
@@ -36,14 +34,16 @@ export default async function PlaylistPage({
   }
 
   // Extract playlist data
+  // console.log("Id is: ", params.id);
+
   const playlistId = playlistItemsData.items[0]?.id || "playlist_id";
 
   const thumbnail = playlistItemsData.items[0]?.snippet.thumbnails.high.url;
   const playlistTitle = playlistItemsData.items[0]?.snippet.title || "Playlist";
-  console.log(playlistTitle);
+  // console.log(playlistTitle);
   const channelName =
     playlistItemsData.items[0]?.snippet.channelTitle || "Unknown Channel";
-  console.log(channelName);
+  // console.log(channelName);
   const videoCount = playlistItemsData.pageInfo.totalResults || 0;
 
   return (

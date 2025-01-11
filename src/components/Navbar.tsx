@@ -4,7 +4,7 @@ import { Menu, Search, Bell, Video, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import logo from "../../public/YouTube-White-Full-Color-Logo.wine.svg";
+// import logo from "../../public/YouTube-White-Full-Color-Logo.wine.svg";
 
 export default function Navbar() {
   return (
