@@ -6,19 +6,21 @@ import PlaylistVideoList from "@/components/[PlaylistVideoList]";
 import Header from "../../../components/Header";
 import PaginationButtons from "../../../components/PaginationButtons";
 import { fetchPlaylistItems } from "../../utils/youtube";
-
 export default async function PlaylistPage({
   params,
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
   params: { id: string };
-  searchParams?: { pageToken?: string };
+  searchParams?: Promise<{ pageToken?: string }>;
 }) {
   let playlistItemsData;
 
   try {
-    // Validate searchParams and fetch playlist items
+    // Await the searchParams before accessing its properties
+    const searchParams = await searchParamsPromise;
     const pageToken = searchParams?.pageToken || ""; // Use an empty string if no token
+
+    // Fetch playlist items
     playlistItemsData = await fetchPlaylistItems(params.id, pageToken);
 
     if (!playlistItemsData || !playlistItemsData.items) {
@@ -35,11 +37,13 @@ export default async function PlaylistPage({
 
   // Extract playlist data
   const playlistId = playlistItemsData.items[0]?.id || "playlist_id";
+
   const thumbnail = playlistItemsData.items[0]?.snippet.thumbnails.high.url;
-  const playlistTitle =
-    playlistItemsData.items[0]?.snippet.playlistTitle || "Playlist";
+  const playlistTitle = playlistItemsData.items[0]?.snippet.title || "Playlist";
+  console.log(playlistTitle);
   const channelName =
     playlistItemsData.items[0]?.snippet.channelTitle || "Unknown Channel";
+  console.log(channelName);
   const videoCount = playlistItemsData.pageInfo.totalResults || 0;
 
   return (

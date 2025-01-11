@@ -4,6 +4,7 @@ import { Menu, Search, Bell, Video, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import logo from "../../public/YouTube-White-Full-Color-Logo.wine.svg";
 
 export default function Navbar() {
   return (
@@ -15,7 +16,9 @@ export default function Navbar() {
           </Button>
           <div className="flex items-center gap-1">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-OL4H6fXTrQtviml9Jlj2Yyr0KlpJXL.png"
+              /*src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-OL4H6fXTrQtviml9Jlj2Yyr0KlpJXL.png"*/
+              /*src="https://upload.wikimedia.org/wikipedia/commons/archive/b/b8/20170829190624%21YouTube_Logo_2017.svg"*/
+              src="https://upload.wikimedia.org/wikipedia/commons/1/1f/YouTube_light_logo_%282017%29.svg"
               alt="YouTube Logo"
               width={90}
               height={20}
@@ -31,9 +34,9 @@ export default function Navbar() {
               <Input
                 type="search"
                 placeholder="Search"
-                className="rounded-r-none bg-[#121212] border-[#303030] focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="rounded-l-full rounded-r-none bg-[#121212] border-[#303030] focus-visible:ring-0 focus-visible:ring-offset-0"
               />
-              <Button className="rounded-l-none bg-[#222222] hover:bg-[#303030] px-6 border border-l-0 border-[#303030]">
+              <Button className="rounded-r-full rounded-l-none bg-[#222222] hover:bg-[#303030] px-6 border border-l-0 border-[#303030]">
                 <Search className="h-5 w-5" />
               </Button>
             </div>

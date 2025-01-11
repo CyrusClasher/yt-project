@@ -9,9 +9,10 @@ export async function fetchPlaylistItems(
     key: process.env.YOUTUBE_API_KEY!,
     ...(pageToken && { pageToken }),
   });
+  console.log(`page token is:${pageToken}`);
 
   const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?${params}`;
-  console.log("Fetching from URL:", apiUrl);
+  // console.log("Fetching from URL:", apiUrl);
 
   const response = await fetch(apiUrl);
 
