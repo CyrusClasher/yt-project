@@ -1,24 +1,23 @@
-import { PlayCircle, Share2, MoreVertical, Bookmark } from "lucide-react";
+import { PlayCircle, Share2, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PlaylistVideoList from "@/components/[PlaylistVideoList]";
-// import Header from "../../../components/Header";
-// import PaginationButtons from "../../../components/PaginationButtons";
 import { fetchPlaylistItems } from "../../utils/youtube";
+
+interface PlaylistPageProps {
+  params: { id: string };
+  searchParams?: { pageToken?: string };
+}
+
 export default async function PlaylistPage({
   params,
   searchParams,
-}: {
-  params: { id: string }; // params is an object
-  searchParams?: { pageToken?: string }; // searchParams is also an object
-}) {
+}: PlaylistPageProps) {
   let playlistItemsData;
 
   try {
-    const pageToken = searchParams?.pageToken || ""; // Use an empty string if no token
-
-    // Fetch playlist items
+    const pageToken = searchParams?.pageToken || "";
     playlistItemsData = await fetchPlaylistItems(params.id, pageToken);
 
     if (!playlistItemsData || !playlistItemsData.items) {
@@ -33,24 +32,17 @@ export default async function PlaylistPage({
     );
   }
 
-  // Extract playlist data
-  // console.log("Id is: ", params.id);
-
   const playlistId = playlistItemsData.items[0]?.id || "playlist_id";
-
   const thumbnail = playlistItemsData.items[0]?.snippet.thumbnails.high.url;
   const playlistTitle = playlistItemsData.items[0]?.snippet.title || "Playlist";
-  // console.log(playlistTitle);
   const channelName =
     playlistItemsData.items[0]?.snippet.channelTitle || "Unknown Channel";
-  // console.log(channelName);
   const videoCount = playlistItemsData.pageInfo.totalResults || 0;
 
   return (
     <div className="pl-60">
       <div className="max-w-[1800px] mx-auto p-4">
         <div className="flex gap-6">
-          {/* Playlist Header */}
           <div className="w-[400px] shrink-0">
             <div className="aspect-video relative rounded-lg overflow-hidden bg-[#272727]">
               <Image
@@ -90,28 +82,12 @@ export default async function PlaylistPage({
             </div>
           </div>
 
-          {/* Videos List */}
           <div className="flex-1">
             <Tabs defaultValue="all" className="w-full">
               <TabsList className="bg-transparent border-b border-[#272727] rounded-none h-auto p-0 mb-4">
-                <TabsTrigger
-                  value="all"
-                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent px-6 py-2"
-                >
-                  All
-                </TabsTrigger>
-                <TabsTrigger
-                  value="videos"
-                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent px-6 py-2"
-                >
-                  Videos
-                </TabsTrigger>
-                <TabsTrigger
-                  value="shorts"
-                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-white data-[state=active]:bg-transparent px-6 py-2"
-                >
-                  Shorts
-                </TabsTrigger>
+                <TabsTrigger value="all">All</TabsTrigger>
+                <TabsTrigger value="videos">Videos</TabsTrigger>
+                <TabsTrigger value="shorts">Shorts</TabsTrigger>
               </TabsList>
               <TabsContent value="all">
                 <PlaylistVideoList playlistId={playlistId} />
