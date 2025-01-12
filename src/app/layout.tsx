@@ -1,4 +1,5 @@
 import "./globals.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Inter } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -6,7 +7,7 @@ import Sidebar from "../components/Sidebar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "YouTube Clone",
+  title: "YouTube Playlist Page",
   description: "A YouTube clone built with Next.js and TailwindCSS",
 };
 
@@ -17,19 +18,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#0f0f0f] text-white`}>
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <div className="flex flex-1">
-            <Sidebar />
-            <main className="flex-1 p-4">{children}</main>
+      <UserProvider>
+        <body className={`${inter.className} bg-[#0f0f0f] text-white`}>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <div className="flex flex-1">
+              <Sidebar />
+              <main className="flex-1 p-4">{children}</main>
+            </div>
           </div>
-        </div>
-      </body>
+        </body>
+      </UserProvider>
     </html>
   );
 }
-
 // import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 // import "./globals.css";

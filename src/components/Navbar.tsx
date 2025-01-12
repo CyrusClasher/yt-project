@@ -4,9 +4,11 @@ import { Menu, Search, Bell, Video, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-// import logo from "../../public/YouTube-White-Full-Color-Logo.wine.svg";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Navbar() {
+  const { user, isLoading } = useUser();
+
   return (
     <nav className="sticky top-0 z-50 bg-[#0f0f0f] border-b border-[#272727]">
       <div className="flex items-center justify-between h-14 px-4">
@@ -16,8 +18,6 @@ export default function Navbar() {
           </Button>
           <div className="flex items-center gap-1">
             <Image
-              /*src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-OL4H6fXTrQtviml9Jlj2Yyr0KlpJXL.png"*/
-              /*src="https://upload.wikimedia.org/wikipedia/commons/archive/b/b8/20170829190624%21YouTube_Logo_2017.svg"*/
               src="https://upload.wikimedia.org/wikipedia/commons/1/1f/YouTube_light_logo_%282017%29.svg"
               alt="YouTube Logo"
               width={90}
@@ -51,17 +51,51 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="hover:bg-[#272727]">
-            <Video className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="hover:bg-[#272727]">
-            <Bell className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon" className="hover:bg-[#272727]">
-            <div className="w-8 h-8 rounded-full bg-[#ff0000] flex items-center justify-center">
-              <span className="text-sm font-medium">A</span>
-            </div>
-          </Button>
+          {!isLoading && !user && (
+            <Button variant="ghost" size="sm" className="hover:bg-[#272727]">
+              <a href="/api/auth/login" className="text-white">
+                Log in
+              </a>
+            </Button>
+          )}
+
+          {user && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-[#272727]"
+              >
+                <Video className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-[#272727]"
+              >
+                <Bell className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-[#272727]"
+              >
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <Image
+                    src={user.picture || "https://via.placeholder.com/50"}
+                    alt="User Profile"
+                    width={32}
+                    height={32}
+                  />
+                </div>
+              </Button>
+              <Button variant="ghost" size="sm" className="hover:bg-[#272727]">
+                <a href="/api/auth/logout" className="text-white">
+                  Log out
+                </a>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </nav>
